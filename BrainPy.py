@@ -1,6 +1,5 @@
 import time
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Embedding, Dense
 from tensorflow.keras.preprocessing.text import Tokenizer
@@ -21,6 +20,9 @@ model.add(Dense(vocab_size, activation='softmax'))
 optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
+# Inicialización del Tokenizer
+tokenizer = Tokenizer(num_words=vocab_size)
+
 def capture_input():
     # Captura de entrada (audio, imagen, texto, o combinación)
     input_data = input("Input: ")
@@ -29,7 +31,7 @@ def capture_input():
 def generate_text(predictions):
     # Interpretación de las predicciones y generación de respuesta
     max_index = np.argmax(predictions[0])
-    generated_text = Tokenizer.index_word[max_index]
+    generated_text = tokenizer.index_word[max_index]
     return generated_text
 
 def output_response(generated_text):
@@ -47,7 +49,7 @@ while True:
     input_data = capture_input()
 
     # Procesamiento y adaptación del modelo a la nueva entrada
-    input_sequences = Tokenizer.texts_to_sequences([input_data])
+    input_sequences = tokenizer.texts_to_sequences([input_data])
     padded_input = pad_sequences(input_sequences, maxlen=max_sequence_length)
 
     # Predicción del modelo
@@ -67,6 +69,3 @@ while True:
 
     # Espera antes de la siguiente iteración
     time.sleep(2)
-
-
-    
