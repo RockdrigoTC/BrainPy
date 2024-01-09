@@ -29,7 +29,7 @@ def capture_input():
 def generate_text(predictions):
     # Interpretación de las predicciones y generación de respuesta
     max_index = np.argmax(predictions[0])
-    generated_text = tokenizer.index_word[max_index]
+    generated_text = Tokenizer.index_word[max_index]
     return generated_text
 
 def output_response(generated_text):
@@ -47,7 +47,7 @@ while True:
     input_data = capture_input()
 
     # Procesamiento y adaptación del modelo a la nueva entrada
-    input_sequences = tokenizer.texts_to_sequences([input_data])
+    input_sequences = Tokenizer.texts_to_sequences([input_data])
     padded_input = pad_sequences(input_sequences, maxlen=max_sequence_length)
 
     # Predicción del modelo
