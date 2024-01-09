@@ -7,6 +7,9 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.optimizers import Adam
 
+vocab_size = 10000
+max_sequence_length = 20
+
 # Inicialización del modelo
 model = Sequential()
 model.add(Embedding(input_dim=vocab_size, output_dim=50, input_length=max_sequence_length))
@@ -37,10 +40,6 @@ def get_user_feedback():
     # Retroalimentación del usuario
     target_data = input("Target: ")
     return target_data
-
-
-
-max_sequence_length = 20
 
 # Bucle continuo de interacción
 while True:
